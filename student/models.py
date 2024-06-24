@@ -1,65 +1,36 @@
 from django.db import models
-
-
-class Student(models.Model):
-    first_name = models.CharField(max_length=20)
-    last_name = models.CharField(max_length=20)
-    email = models.EmailField()
-    code = models.PositiveSmallIntegerField()
-    date_of_birth = models.DateField()
-    country = models.CharField(max_length=20)
-    bio = models.TextField()
-    
-    def __str__(self):
-        return f"{self.first_name} {self.last_name}"
-   
-
 class Class(models.Model):
-    class_name = models.CharField(max_length=100)
-    class_code = models.CharField(max_length=20, unique=True)
-    start_time = models.TimeField()
-    end_time = models.TimeField()
-    day_of_week = models.CharField(max_length=10)
-    room_number = models.CharField(max_length=10)
-    capacity = models.PositiveIntegerField()
-    current_enrollment = models.PositiveIntegerField(default=0)
-    teacher = models.ForeignKey('Teacher', on_delete=models.SET_NULL, null=True)
-    course = models.ForeignKey('Course', on_delete=models.CASCADE)
-    semester = models.CharField(max_length=20)
-    year = models.PositiveIntegerField()
-
-    def __str__(self):
-        return f"{self.class_name} ({self.class_code})"
+    clas_id = models.SmallIntegerField()
+    class_name = models.CharField(max_length=20)
+    course = models.CharField(max_length=20)
+    teacher = models.CharField(max_length=20)
+    enrollnment = models.SmallIntegerField()
+    room_number = models.SmallIntegerField()
+    class_duration = models.CharField(max_length=20)
+    meeting_days = models.CharField(max_length=20)
+    class_rep = models.CharField(max_length=20)
+    class_capacity = models.SmallIntegerField()
 
 class Course(models.Model):
-    course_name = models.CharField(max_length=100)
-    course_code = models.CharField(max_length=20, unique=True)
-    description = models.TextField()
-    credits = models.PositiveSmallIntegerField()
-    department = models.CharField(max_length=50)
-    prerequisites = models.ManyToManyField('self', symmetrical=False, blank=True)
-    is_active = models.BooleanField(default=True)
-    level = models.CharField(max_length=20)
-    syllabus = models.FileField(upload_to='syllabi/', null=True, blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return f"{self.course_name} ({self.course_code})"
+    course_id = models.SmallIntegerField()
+    course_name = models.CharField(max_length=20)
+    course_description = models.TextField()
+    department = models.CharField(max_length=20)
+    course_instructor = models.CharField(max_length=20)
+    assessment_requirements = models.TextField()
+    course_fee = models.IntegerField()
 
 class Teacher(models.Model):
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
-    email = models.EmailField(unique=True)
-    employee_id = models.CharField(max_length=20, unique=True)
-    date_of_birth = models.DateField()
-    department = models.CharField(max_length=50)
-    office_number = models.CharField(max_length=10)
-    phone_number = models.CharField(max_length=15)
-    hire_date = models.DateField()
-    salary = models.DecimalField(max_digits=10, decimal_places=2)
-    education_level = models.CharField(max_length=50)
-    specialization = models.CharField(max_length=100)
-
+    firstname = models.CharField(max_length=20)
+    lastname = models.CharField(max_length=20)
+    gender = models.CharField(max_length=20)
+    email = models.EmailField()
+    department = models.CharField(max_length=20)
+    teacher_id = models.SmallIntegerField()
+    date_of_joining = models.DateField()
+    nationality = models.CharField(max_length=20)
+    bio = models.TextField()
+    years_of_experience = models.SmallIntegerField()
+    photo = models.ImageField()
     def __str__(self):
-        return f"{self.first_name} {self.last_name}"
+        return f"{self.firstname} {self.lastname}"
